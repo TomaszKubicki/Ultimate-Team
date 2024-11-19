@@ -163,7 +163,11 @@ public class Piłkarz
             new Piłkarz("Jadon", "Sancho", "Manchester United", "Anglia", 23, 78, 82, 50, 85),
             new Piłkarz("Thiago", "Alcantara", "Liverpool", "Hiszpania", 32, 75, 90, 55, 70),
             new Piłkarz("Ederson", "Moraes", "Manchester City", "Brazylia", 30, 55, 60, 80, 75),
-            new Piłkarz("Cesar", "Azpilicueta", "Chelsea", "Hiszpania", 34, 60, 70, 85, 65)
+            new Piłkarz("Cesar", "Azpilicueta", "Chelsea", "Hiszpania", 34, 60, 70, 85, 65),
+            new Piłkarz("Harry", "Maguire", "Manchester United", "Anglia", 31, 55, 72, 87, 67),
+            new Piłkarz("Crisitiano", "Ronaldo", "Al Nassr", "Portugalia", 39, 99, 97, 70, 85),
+            new Piłkarz("Lionel", "Messi", "Inter Maiami", "Argentyna", 37, 80, 90, 15, 50),
+            new Piłkarz("Sergio", "Ramos", "Brak klubu", "Hiszpania", 38, 50, 55, 90, 69),
             };
 
             for (int i = 0; i < 2; i++)
