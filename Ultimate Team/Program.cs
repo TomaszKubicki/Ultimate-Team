@@ -32,10 +32,84 @@ public class Piłkarz
     {
         return ((Strzelanie + Podania + Obrona + Tempo) / 4);
     }
+    public class Menu
+    {
+        public void ShowMainMenu()
+        {
+            bool isRunning = true;
+
+            while (isRunning)
+            {
+                Console.Clear();
+                Console.WriteLine("=== MENU GŁÓWNE ===");
+                Console.WriteLine("1. Rozpocznij Grę");
+                Console.WriteLine("2. O Grze");
+                Console.WriteLine("3. Wyjście");
+                Console.Write("Wybierz opcję: ");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        StartGame();
+                        break;
+                    case "2":
+                        ShowAbout();
+                        break;
+                    case "3":
+                        isRunning = false;
+                        break;
+                    default:
+                        Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
+
+        private void StartGame()
+        {
+            Console.Clear();
+            Console.WriteLine("=== TRYB GRY ===");
+            Console.WriteLine("1. Gra z komputerem");
+            Console.WriteLine("2. Gra z drugim graczem");
+            Console.Write("Wybierz tryb: ");
+
+            string gameMode = Console.ReadLine();
+
+            switch (gameMode)
+            {
+                case "1":
+                    Console.WriteLine("Rozpoczynasz grę z komputerem...");
+                    // Tutaj dodaj logikę gry z komputerem
+                    break;
+                case "2":
+                    Console.WriteLine("Rozpoczynasz grę z drugim graczem...");
+                    // Tutaj dodaj logikę gry z drugim graczem
+                    break;
+                default:
+                    Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+
+        private void ShowAbout()
+        {
+            Console.Clear();
+            Console.WriteLine("=== GRA WZOROWANA NA POPULARNEJ GRZE FIFA ULTIMATE TEAM W WERSJI COMANDLINE ===");
+            Console.WriteLine("Grę stworzyli uczniowie klasy 5a technikum komunikacji jako projekt pracowni programowania");
+            Console.WriteLine("Naciśnij dowolny klawisz, aby wrócić do menu.");
+            Console.ReadKey();
+        }
+    }
     class Program
     {
         static void Main(string[] args)
-        { 
+        {
+            Menu menu = new Menu();
+            menu.ShowMainMenu();
             Piłkarz[] pilkarze = new Piłkarz[2];
             for(int i=0; i<2; i++)
             {

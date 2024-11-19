@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ultimate Team")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3470c5a3f2a1451e1016018de7d1ffb708302018")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a699f4cea6bba063ec496a3135b8d539e83b7efd")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ultimate Team")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ultimate Team")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
