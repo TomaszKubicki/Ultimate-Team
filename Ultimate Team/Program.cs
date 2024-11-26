@@ -3,7 +3,78 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
+public class Menu
+{
+    public void ShowMainMenu()
+    {
+        bool isRunning = true;
 
+        while (isRunning)
+        {
+            Console.Clear();
+            Console.WriteLine("=== MENU GŁÓWNE ===");
+            Console.WriteLine("1. Rozpocznij Grę");
+            Console.WriteLine("2. O Grze");
+            Console.WriteLine("3. Wyjście");
+            Console.Write("Wybierz opcję: ");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    StartGame();
+                    break;
+                case "2":
+                    ShowAbout();
+                    break;
+                case "3":
+                    isRunning = false;
+                    break;
+                default:
+                    Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+    }
+
+    private void StartGame()
+    {
+        Console.Clear();
+        Console.WriteLine("=== TRYB GRY ===");
+        Console.WriteLine("1. Gra z komputerem");
+        Console.WriteLine("2. Gra z drugim graczem");
+        Console.Write("Wybierz tryb: ");
+
+        string gameMode = Console.ReadLine();
+
+        switch (gameMode)
+        {
+            case "1":
+                Console.WriteLine("Rozpoczynasz grę z komputerem...");
+                // Tutaj dodaj logikę gry z komputerem
+                break;
+            case "2":
+                Console.WriteLine("Rozpoczynasz grę z drugim graczem...");
+                // Tutaj dodaj logikę gry z drugim graczem
+                break;
+            default:
+                Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
+                Console.ReadKey();
+                break;
+        }
+    }
+
+    private void ShowAbout()
+    {
+        Console.Clear();
+        Console.WriteLine("=== GRA WZOROWANA NA POPULARNEJ GRZE FIFA ULTIMATE TEAM W WERSJI COMANDLINE ===");
+        Console.WriteLine("Grę stworzyli uczniowie klasy 5a technikum komunikacji jako projekt pracowni programowania");
+        Console.WriteLine("Naciśnij dowolny klawisz, aby wrócić do menu.");
+        Console.ReadKey();
+    }
+}
 public class Piłkarz
 {
     public string Imie;
@@ -32,119 +103,82 @@ public class Piłkarz
     {
         return ((Strzelanie + Podania + Obrona + Tempo) / 4);
     }
-    public class Menu
+}
+public class ZarządzeniePiłkarzami
+{
+    private Piłkarz[] pilkarze;
+    private int count;
+
+    public ZarządzeniePiłkarzami()
     {
-        public void ShowMainMenu()
+        pilkarze = new Piłkarz[5];
+        count = 0;
+    }
+
+    public void DodajPiłkarza()
+    {
+        if (count >= pilkarze.Length)
         {
-            bool isRunning = true;
-
-            while (isRunning)
-            {
-                Console.Clear();
-                Console.WriteLine("=== MENU GŁÓWNE ===");
-                Console.WriteLine("1. Rozpocznij Grę");
-                Console.WriteLine("2. O Grze");
-                Console.WriteLine("3. Wyjście");
-                Console.Write("Wybierz opcję: ");
-
-                string choice = Console.ReadLine();
-
-                switch (choice)
-                {
-                    case "1":
-                        StartGame();
-                        break;
-                    case "2":
-                        ShowAbout();
-                        break;
-                    case "3":
-                        isRunning = false;
-                        break;
-                    default:
-                        Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
-                        Console.ReadKey();
-                        break;
-                }
-            }
+            Console.WriteLine("Nie można dodać więcej piłkarzy, tablica jest pełna.");
+            return;
         }
 
-        private void StartGame()
+        Console.WriteLine("Podaj imię piłkarza:");
+        string imie = Console.ReadLine();
+
+        Console.WriteLine("Podaj nazwisko piłkarza:");
+        string nazwisko = Console.ReadLine();
+
+        Console.WriteLine("Podaj klub piłkarza:");
+        string klub = Console.ReadLine();
+
+        Console.WriteLine("Podaj narodowość piłkarza:");
+        string narodowosc = Console.ReadLine();
+
+        Console.WriteLine("Podaj wiek piłkarza:");
+        int wiek = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Podaj ocenę strzelania (0-100):");
+        int strzelanie = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Podaj ocenę podań (0-100):");
+        int podania = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Podaj ocenę obrony (0-100):");
+        int obrona = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Podaj ocenę tempa (0-100):");
+        int tempo = int.Parse(Console.ReadLine());
+
+        Piłkarz nowyPilkarz = new Piłkarz(imie, nazwisko, klub, narodowosc, wiek, strzelanie, podania, obrona, tempo);
+        pilkarze[count] = nowyPilkarz;
+        count++;
+        Console.WriteLine("Piłkarz dodany pomyślnie!\n");
+    }
+
+    public void PokażPiłkarzy()
+    {
+        Console.WriteLine("Lista piłkarzy:");
+        for (int i = 0; i < count; i++)
         {
-            Console.Clear();
-            Console.WriteLine("=== TRYB GRY ===");
-            Console.WriteLine("1. Gra z komputerem");
-            Console.WriteLine("2. Gra z drugim graczem");
-            Console.Write("Wybierz tryb: ");
-
-            string gameMode = Console.ReadLine();
-
-            switch (gameMode)
-            {
-                case "1":
-                    Console.WriteLine("Rozpoczynasz grę z komputerem...");
-                    // Tutaj dodaj logikę gry z komputerem
-                    break;
-                case "2":
-                    Console.WriteLine("Rozpoczynasz grę z drugim graczem...");
-                    // Tutaj dodaj logikę gry z drugim graczem
-                    break;
-                default:
-                    Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
-                    Console.ReadKey();
-                    break;
-            }
-        }
-
-        private void ShowAbout()
-        {
-            Console.Clear();
-            Console.WriteLine("=== GRA WZOROWANA NA POPULARNEJ GRZE FIFA ULTIMATE TEAM W WERSJI COMANDLINE ===");
-            Console.WriteLine("Grę stworzyli uczniowie klasy 5a technikum komunikacji jako projekt pracowni programowania");
-            Console.WriteLine("Naciśnij dowolny klawisz, aby wrócić do menu.");
-            Console.ReadKey();
+            Console.WriteLine(pilkarze[i]);
         }
     }
-    class Program
+}
+class Program
+{
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        Menu menu = new Menu();
+        menu.ShowMainMenu();
+        ZarządzeniePiłkarzami zarzadzenie = new ZarządzeniePiłkarzami();
+        for (int i = 0; i < 5; i++)
         {
-            Menu menu = new Menu();
-            menu.ShowMainMenu();
-            Piłkarz[] pilkarze = new Piłkarz[2];
-            for(int i=0; i<2; i++)
-            {
-                Console.WriteLine("Podaj imię piłkarza:");
-                string imie = Console.ReadLine();
-
-                Console.WriteLine("Podaj nazwisko piłkarza:");
-                string nazwisko = Console.ReadLine();
-
-                Console.WriteLine("Podaj klub piłkarza:");
-                string klub = Console.ReadLine();
-
-                Console.WriteLine("Podaj narodowość piłkarza:");
-                string narodowosc = Console.ReadLine();
-
-                Console.WriteLine("Podaj wiek piłkarza:");
-                int wiek = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("Podaj ocenę strzelania (0-100):");
-                int strzelanie = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("Podaj ocenę podań (0-100):");
-                int podania = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("Podaj ocenę obrony (0-100):");
-                int obrona = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("Podaj ocenę tempa (0-100):");
-                int tempo = int.Parse(Console.ReadLine());
-
-                pilkarze[i] = new Piłkarz(imie, nazwisko, klub, narodowosc, wiek, strzelanie, podania, obrona, tempo);
-                Console.WriteLine();
-            }
-            Piłkarz[] pilkarzerand = new Piłkarz[]
-            {
+            Console.WriteLine($"Dodaj piłkarza {i + 1}:");
+            zarzadzenie.DodajPiłkarza();
+        }
+        Piłkarz[] pilkarzerand = new Piłkarz[]
+        {
             new Piłkarz("Mohamed", "Salah", "Liverpool", "Egipt", 31, 90, 85, 60, 89),
             new Piłkarz("Harry", "Kane", "Tottenham", "Anglia", 30, 88, 78, 70, 75),
             new Piłkarz("Kevin", "De Bruyne", "Manchester City", "Belgia", 32, 85, 92, 65, 70),
@@ -168,19 +202,6 @@ public class Piłkarz
             new Piłkarz("Crisitiano", "Ronaldo", "Al Nassr", "Portugalia", 39, 99, 97, 70, 85),
             new Piłkarz("Lionel", "Messi", "Inter Maiami", "Argentyna", 37, 80, 90, 15, 50),
             new Piłkarz("Sergio", "Ramos", "Brak klubu", "Hiszpania", 38, 50, 55, 90, 69),
-            };
-
-            for (int i = 0; i < 2; i++)
-            {
-                Piłkarz pilkarz = pilkarze[i];
-                Console.WriteLine($"Piłkarz {i + 1}: {pilkarz.Imie} {pilkarz.Nazwisko}");
-                Console.WriteLine($"Klub: {pilkarz.Klub}");
-                Console.WriteLine($"Narodowość: {pilkarz.Narodowosc}");
-                Console.WriteLine($"Wiek: {pilkarz.Wiek}");
-                Console.WriteLine($"Ocena ogólna: {pilkarz.ovrl()}");
-                Console.WriteLine();
-            }
-        }
+        };
     }
-
 }
