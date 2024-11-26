@@ -1,4 +1,5 @@
 ﻿
+using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
@@ -56,14 +57,36 @@ public class Menu
                 // Tutaj dodaj logikę gry z komputerem
                 break;
             case "2":
+                
                 Console.WriteLine("Rozpoczynasz grę z drugim graczem...");
-                // Tutaj dodaj logikę gry z drugim graczem
+                Thread.Sleep(1000);
+                Dodawanie();
                 break;
             default:
                 Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
                 Console.ReadKey();
                 break;
         }
+       
+    }
+    private void Dodawanie()
+    {
+        Console.Clear();
+        Console.WriteLine("Wybierz z listy 1");
+        Console.WriteLine("wprowadź gracza 2");
+        string gameMode2 = Console.ReadLine();
+
+        switch (gameMode2)
+        {
+            case "1":
+                Console.WriteLine("wybierz graczy z listy");
+                break;
+            case "2":
+                Console.WriteLine("wprowadz dane gracza");
+                Thread.Sleep(1000);
+                break;
+        }
+
     }
 
     private void ShowAbout()
@@ -170,7 +193,7 @@ class Program
     static void Main(string[] args)
     {
         Menu menu = new Menu();
-        menu.ShowMainMenu();
+
         ZarządzeniePiłkarzami zarzadzenie = new ZarządzeniePiłkarzami();
         for (int i = 0; i < 5; i++)
         {
@@ -203,5 +226,8 @@ class Program
             new Piłkarz("Lionel", "Messi", "Inter Maiami", "Argentyna", 37, 80, 90, 15, 50),
             new Piłkarz("Sergio", "Ramos", "Brak klubu", "Hiszpania", 38, 50, 55, 90, 69),
         };
+
+        menu.ShowMainMenu();
+
     }
 }
