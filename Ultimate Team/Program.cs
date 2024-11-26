@@ -104,44 +104,78 @@ public class Piłkarz
         return ((Strzelanie + Podania + Obrona + Tempo) / 4);
     }
 }
+public class ZarządzeniePiłkarzami
+{
+    private Piłkarz[] pilkarze;
+    private int count;
+
+    public ZarządzeniePiłkarzami()
+    {
+        pilkarze = new Piłkarz[5];
+        count = 0;
+    }
+
+    public void DodajPiłkarza()
+    {
+        if (count >= pilkarze.Length)
+        {
+            Console.WriteLine("Nie można dodać więcej piłkarzy, tablica jest pełna.");
+            return;
+        }
+
+        Console.WriteLine("Podaj imię piłkarza:");
+        string imie = Console.ReadLine();
+
+        Console.WriteLine("Podaj nazwisko piłkarza:");
+        string nazwisko = Console.ReadLine();
+
+        Console.WriteLine("Podaj klub piłkarza:");
+        string klub = Console.ReadLine();
+
+        Console.WriteLine("Podaj narodowość piłkarza:");
+        string narodowosc = Console.ReadLine();
+
+        Console.WriteLine("Podaj wiek piłkarza:");
+        int wiek = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Podaj ocenę strzelania (0-100):");
+        int strzelanie = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Podaj ocenę podań (0-100):");
+        int podania = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Podaj ocenę obrony (0-100):");
+        int obrona = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Podaj ocenę tempa (0-100):");
+        int tempo = int.Parse(Console.ReadLine());
+
+        Piłkarz nowyPilkarz = new Piłkarz(imie, nazwisko, klub, narodowosc, wiek, strzelanie, podania, obrona, tempo);
+        pilkarze[count] = nowyPilkarz;
+        count++;
+        Console.WriteLine("Piłkarz dodany pomyślnie!\n");
+    }
+
+    public void PokażPiłkarzy()
+    {
+        Console.WriteLine("Lista piłkarzy:");
+        for (int i = 0; i < count; i++)
+        {
+            Console.WriteLine(pilkarze[i]);
+        }
+    }
+}
 class Program
 {
     static void Main(string[] args)
     {
         Menu menu = new Menu();
         menu.ShowMainMenu();
-        Piłkarz[] pilkarze = new Piłkarz[2];
-        for (int i = 0; i < 2; i++)
+        ZarządzeniePiłkarzami zarzadzenie = new ZarządzeniePiłkarzami();
+        for (int i = 0; i < 5; i++)
         {
-            Console.WriteLine("Podaj imię piłkarza:");
-            string imie = Console.ReadLine();
-
-            Console.WriteLine("Podaj nazwisko piłkarza:");
-            string nazwisko = Console.ReadLine();
-
-            Console.WriteLine("Podaj klub piłkarza:");
-            string klub = Console.ReadLine();
-
-            Console.WriteLine("Podaj narodowość piłkarza:");
-            string narodowosc = Console.ReadLine();
-
-            Console.WriteLine("Podaj wiek piłkarza:");
-            int wiek = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Podaj ocenę strzelania (0-100):");
-            int strzelanie = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Podaj ocenę podań (0-100):");
-            int podania = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Podaj ocenę obrony (0-100):");
-            int obrona = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Podaj ocenę tempa (0-100):");
-            int tempo = int.Parse(Console.ReadLine());
-
-            pilkarze[i] = new Piłkarz(imie, nazwisko, klub, narodowosc, wiek, strzelanie, podania, obrona, tempo);
-            Console.WriteLine();
+            Console.WriteLine($"Dodaj piłkarza {i + 1}:");
+            zarzadzenie.DodajPiłkarza();
         }
         Piłkarz[] pilkarzerand = new Piłkarz[]
         {
@@ -169,16 +203,5 @@ class Program
             new Piłkarz("Lionel", "Messi", "Inter Maiami", "Argentyna", 37, 80, 90, 15, 50),
             new Piłkarz("Sergio", "Ramos", "Brak klubu", "Hiszpania", 38, 50, 55, 90, 69),
         };
-
-        for (int i = 0; i < 2; i++)
-        {
-            Piłkarz pilkarz = pilkarze[i];
-            Console.WriteLine($"Piłkarz {i + 1}: {pilkarz.Imie} {pilkarz.Nazwisko}");
-            Console.WriteLine($"Klub: {pilkarz.Klub}");
-            Console.WriteLine($"Narodowość: {pilkarz.Narodowosc}");
-            Console.WriteLine($"Wiek: {pilkarz.Wiek}");
-            Console.WriteLine($"Ocena ogólna: {pilkarz.ovrl()}");
-            Console.WriteLine();
-        }
     }
 }
