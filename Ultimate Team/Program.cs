@@ -135,27 +135,61 @@ public class ZarządzeniePiłkarzami
         Console.WriteLine("Podaj narodowość piłkarza:");
         string narodowosc = Console.ReadLine();
 
-        Console.WriteLine("Podaj wiek piłkarza:");
-        int wiek = int.Parse(Console.ReadLine());
+        int wiek = 0;
+        while (true)
+        {
+            Console.WriteLine("Podaj wiek piłkarza:");
+            if (int.TryParse(Console.ReadLine(), out wiek) && wiek > 0)
+                break;
+            else
+                Console.WriteLine("Niepoprawny wiek. Proszę podać liczbę całkowitą większą od 0.");
+        }
 
-        Console.WriteLine("Podaj ocenę strzelania (0-100):");
-        int strzelanie = int.Parse(Console.ReadLine());
+        int strzelanie = 0;
+        while (true)
+        {
+            Console.WriteLine("Podaj ocenę strzelania (0-100):");
+            if (int.TryParse(Console.ReadLine(), out strzelanie) && strzelanie >= 0 && strzelanie <= 100)
+                break;
+            else
+                Console.WriteLine("Niepoprawna ocena strzelania. Proszę podać liczbę całkowitą w zakresie 0-100.");
+        }
 
-        Console.WriteLine("Podaj ocenę podań (0-100):");
-        int podania = int.Parse(Console.ReadLine());
+        int podania = 0;
+        while (true)
+        {
+            Console.WriteLine("Podaj ocenę podań (0-100):");
+            if (int.TryParse(Console.ReadLine(), out podania) && podania >= 0 && podania <= 100)
+                break;
+            else
+                Console.WriteLine("Niepoprawna ocena podań. Proszę podać liczbę całkowitą w zakresie 0-100.");
+        }
 
-        Console.WriteLine("Podaj ocenę obrony (0-100):");
-        int obrona = int.Parse(Console.ReadLine());
+        int obrona = 0;
+        while (true)
+        {
+            Console.WriteLine("Podaj ocenę obrony (0-100):");
+            if (int.TryParse(Console.ReadLine(), out obrona) && obrona >= 0 && obrona <= 100)
+                break;
+            else
+                Console.WriteLine("Niepoprawna ocena obrony. Proszę podać liczbę całkowitą w zakresie 0-100.");
+        }
 
-        Console.WriteLine("Podaj ocenę tempa (0-100):");
-        int tempo = int.Parse(Console.ReadLine());
+        int tempo = 0;
+        while (true)
+        {
+            Console.WriteLine("Podaj ocenę tempa (0-100):");
+            if (int.TryParse(Console.ReadLine(), out tempo) && tempo >= 0 && tempo <= 100)
+                break;
+            else
+                Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
+        }
 
         Piłkarz nowyPilkarz = new Piłkarz(imie, nazwisko, klub, narodowosc, wiek, strzelanie, podania, obrona, tempo);
         pilkarze[count] = nowyPilkarz;
         count++;
         Console.WriteLine("Piłkarz dodany pomyślnie!\n");
     }
-
     public void PokażPiłkarzy()
     {
         Console.WriteLine("Lista piłkarzy:");
