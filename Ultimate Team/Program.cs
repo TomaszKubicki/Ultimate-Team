@@ -31,6 +31,7 @@ public class Menu
                     break;
                 case "3":
                     isRunning = false;
+                    Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
@@ -80,10 +81,18 @@ public class Menu
         {
             case "1":
                 Console.WriteLine("wybierz graczy z listy");
+
                 break;
             case "2":
                 Console.WriteLine("wprowadz dane gracza");
                 Thread.Sleep(1000);
+                ZarządzeniePiłkarzami zarzadzenie = new ZarządzeniePiłkarzami();
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine($"Dodaj piłkarza {i + 1}:");
+                    zarzadzenie.DodajPiłkarza();
+                };
+
                 break;
         }
 
@@ -193,13 +202,8 @@ class Program
     static void Main(string[] args)
     {
         Menu menu = new Menu();
+        menu.ShowMainMenu();
 
-        ZarządzeniePiłkarzami zarzadzenie = new ZarządzeniePiłkarzami();
-        for (int i = 0; i < 5; i++)
-        {
-            Console.WriteLine($"Dodaj piłkarza {i + 1}:");
-            zarzadzenie.DodajPiłkarza();
-        }
         Piłkarz[] pilkarzerand = new Piłkarz[]
         {
             new Piłkarz("Mohamed", "Salah", "Liverpool", "Egipt", 31, 90, 85, 60, 89),
@@ -227,7 +231,7 @@ class Program
             new Piłkarz("Sergio", "Ramos", "Brak klubu", "Hiszpania", 38, 50, 55, 90, 69),
         };
 
-        menu.ShowMainMenu();
+       
 
     }
 }
