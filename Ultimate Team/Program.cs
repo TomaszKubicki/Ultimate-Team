@@ -55,7 +55,9 @@ public class Menu
         switch (gameMode)
         {
             case "1":
+                Console.Clear();
                 Console.WriteLine("Rozpoczynasz grę z komputerem...");
+                Console.WriteLine();
                 Piłkarz[] pilkarzerand = new Piłkarz[]
                 {
                     new Piłkarz("Lionel", "Messi", "Paris Saint-Germain", "Argentyna", 37, 92, 94, 70, 85),
@@ -148,8 +150,7 @@ public class Menu
                
                 Random random = new Random();
                 int losowaLiczba = random.Next(0, pilkarzerand.Length);
-                Console.WriteLine($"Wylosowana liczba: {losowaLiczba}");
-                Console.WriteLine($"Wylosowany piłkarz: {pilkarzerand[losowaLiczba]}");
+                Console.WriteLine($"Wylosowana numer piłkarza: {losowaLiczba}");
                 Console.WriteLine($"Imię: {pilkarzerand[losowaLiczba].Imie}");
                 Console.WriteLine($"Nazwisko: {pilkarzerand[losowaLiczba].Nazwisko}");
                 Console.WriteLine($"Klub: {pilkarzerand[losowaLiczba].Klub}");
@@ -224,18 +225,19 @@ public class Menu
                         Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
                 }
                 double ocena1 = (podania + tempo + obrona + strzelanie) / 4;
+                Console.WriteLine();
                 if(ocena>ocena1)
                 {
                     Console.WriteLine("Piłkarz podany przez komputer jest lepszy");
                 }
                 else
                 {
-                    Console.WriteLine("Twój piłkarz jest wygrał!");
+                    Console.WriteLine("Twój piłkarz wygrał!!!");
+                    Console.WriteLine("Widziać, że znasz się na piłce! GRATULACJE!");
                 }
                 Thread.Sleep(10000);
                 break;
             case "2":
-                
                 Console.WriteLine("Rozpoczynasz grę z drugim graczem...");
                 Thread.Sleep(1000);
                 Dodawanie();
