@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -55,7 +56,120 @@ public class Menu
         {
             case "1":
                 Console.WriteLine("Rozpoczynasz grę z komputerem...");
-                // Tutaj dodaj logikę gry z komputerem
+                Piłkarz[] pilkarzerand = new Piłkarz[]
+                {
+                    new Piłkarz("Mohamed", "Salah", "Liverpool", "Egipt", 31, 90, 85, 60, 89),
+                    new Piłkarz("Harry", "Kane", "Tottenham", "Anglia", 30, 88, 78, 70, 75),
+                    new Piłkarz("Kevin", "De Bruyne", "Manchester City", "Belgia", 32, 85, 92, 65, 70),
+                    new Piłkarz("N'Golo", "Kante", "Chelsea", "Francja", 32, 60, 75, 90, 80),
+                    new Piłkarz("Bruno", "Fernandes", "Manchester United", "Portugalia", 29, 80, 88, 60, 78),
+                    new Piłkarz("Son", "Heung-min", "Tottenham", "Korea Południowa", 31, 87, 80, 55, 90),
+                    new Piłkarz("Riyad", "Mahrez", "Manchester City", "Algieria", 32, 83, 75, 50, 85),
+                    new Piłkarz("Sadio", "Mane", "Al Nassr", "Senegal", 31, 86, 79, 60, 88),
+                    new Piłkarz("Virgil", "van Dijk", "Liverpool", "Holandia", 32, 60, 70, 90, 75),
+                    new Piłkarz("Alisson", "Becker", "Liverpool", "Brazylia", 31, 50, 55, 85, 70),
+                    new Piłkarz("Marcus", "Rashford", "Manchester United", "Anglia", 25, 82, 80, 50, 87),
+                    new Piłkarz("Jack", "Grealish", "Manchester City", "Anglia", 28, 75, 82, 55, 80),
+                    new Piłkarz("Raheem", "Sterling", "Chelsea", "Anglia", 29, 80, 78, 50, 90),
+                    new Piłkarz("Ruben", "Dias", "Manchester City", "Portugalia", 26, 65, 70, 85, 70),
+                    new Piłkarz("Ben", "Chilwell", "Chelsea", "Anglia", 26, 70, 75, 70, 80),
+                    new Piłkarz("Jadon", "Sancho", "Manchester United", "Anglia", 23, 78, 82, 50, 85),
+                    new Piłkarz("Thiago", "Alcantara", "Liverpool", "Hiszpania", 32, 75, 90, 55, 70),
+                    new Piłkarz("Ederson", "Moraes", "Manchester City", "Brazylia", 30, 55, 60, 80, 75),
+                    new Piłkarz("Cesar", "Azpilicueta", "Chelsea", "Hiszpania", 34, 60, 70, 85, 65),
+                    new Piłkarz("Harry", "Maguire", "Manchester United", "Anglia", 31, 55, 72, 87, 67),
+                    new Piłkarz("Crisitiano", "Ronaldo", "Al Nassr", "Portugalia", 39, 99, 97, 70, 85),
+                    new Piłkarz("Lionel", "Messi", "Inter Maiami", "Argentyna", 37, 80, 90, 15, 50),
+                    new Piłkarz("Sergio", "Ramos", "Brak klubu", "Hiszpania", 38, 50, 55, 90, 69),
+                };
+               
+                Random random = new Random();
+                int losowaLiczba = random.Next(0, pilkarzerand.Length);
+                Console.WriteLine($"Wylosowana liczba: {losowaLiczba}");
+                Console.WriteLine($"Wylosowany piłkarz: {pilkarzerand[losowaLiczba]}");
+                Console.WriteLine($"Imię: {pilkarzerand[losowaLiczba].Imie}");
+                Console.WriteLine($"Nazwisko: {pilkarzerand[losowaLiczba].Nazwisko}");
+                Console.WriteLine($"Klub: {pilkarzerand[losowaLiczba].Klub}");
+                Console.WriteLine($"Narodowość: {pilkarzerand[losowaLiczba].Narodowosc}");
+                Console.WriteLine($"Wiek: {pilkarzerand[losowaLiczba].Wiek}");
+                Console.WriteLine($"Strzelanie: {pilkarzerand[losowaLiczba].Strzelanie}");
+                Console.WriteLine($"Podania: {pilkarzerand[losowaLiczba].Podania}");
+                Console.WriteLine($"Obrona: {pilkarzerand[losowaLiczba].Obrona}");
+                Console.WriteLine($"Tempo: {pilkarzerand[losowaLiczba].Tempo}");
+                double ocena = (pilkarzerand[losowaLiczba].Podania + pilkarzerand[losowaLiczba].Obrona + pilkarzerand[losowaLiczba].Tempo + pilkarzerand[losowaLiczba].Strzelanie)/4;
+                Console.WriteLine("Ocena tego piłkarza to: " + ocena);
+                Console.WriteLine();
+                Console.WriteLine("Podaj swojego piłkarza!!!");
+                Console.WriteLine("Podaj imię piłkarza:");
+                string imie = Console.ReadLine();
+
+                Console.WriteLine("Podaj nazwisko piłkarza:");
+                string nazwisko = Console.ReadLine();
+
+                Console.WriteLine("Podaj klub piłkarza:");
+                string klub = Console.ReadLine();
+
+                Console.WriteLine("Podaj narodowość piłkarza:");
+                string narodowosc = Console.ReadLine();
+                int wiek = 0;
+                while (true)
+                {
+                    Console.WriteLine("Podaj wiek piłkarza:");
+                    if (int.TryParse(Console.ReadLine(), out wiek) && wiek > 0)
+                        break;
+                    else
+                        Console.WriteLine("Niepoprawny wiek. Proszę podać liczbę całkowitą większą od 0.");
+                }
+
+                int strzelanie = 0;
+                while (true)
+                {
+                    Console.WriteLine("Podaj ocenę strzelania (0-100):");
+                    if (int.TryParse(Console.ReadLine(), out strzelanie) && strzelanie >= 0 && strzelanie <= 100)
+                        break;
+                    else
+                        Console.WriteLine("Niepoprawna ocena strzelania. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                }
+
+                int podania = 0;
+                while (true)
+                {
+                    Console.WriteLine("Podaj ocenę podań (0-100):");
+                    if (int.TryParse(Console.ReadLine(), out podania) && podania >= 0 && podania <= 100)
+                        break;
+                    else
+                        Console.WriteLine("Niepoprawna ocena podań. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                }
+
+                int obrona = 0;
+                while (true)
+                {
+                    Console.WriteLine("Podaj ocenę obrony (0-100):");
+                    if (int.TryParse(Console.ReadLine(), out obrona) && obrona >= 0 && obrona <= 100)
+                        break;
+                    else
+                        Console.WriteLine("Niepoprawna ocena obrony. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                }
+
+                int tempo = 0;
+                while (true)
+                {
+                    Console.WriteLine("Podaj ocenę tempa (0-100):");
+                    if (int.TryParse(Console.ReadLine(), out tempo) && tempo >= 0 && tempo <= 100)
+                        break;
+                    else
+                        Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                }
+                double ocena1 = (podania + tempo + obrona + strzelanie) / 4;
+                if(ocena>ocena1)
+                {
+                    Console.WriteLine("Piłkarz podany przez komputer jest lepszy");
+                }
+                else
+                {
+                    Console.WriteLine("Twój piłkarz jest wygrał!");
+                }
+                Thread.Sleep(10000);
                 break;
             case "2":
                 
@@ -237,35 +351,5 @@ class Program
     {
         Menu menu = new Menu();
         menu.ShowMainMenu();
-
-        Piłkarz[] pilkarzerand = new Piłkarz[]
-        {
-            new Piłkarz("Mohamed", "Salah", "Liverpool", "Egipt", 31, 90, 85, 60, 89),
-            new Piłkarz("Harry", "Kane", "Tottenham", "Anglia", 30, 88, 78, 70, 75),
-            new Piłkarz("Kevin", "De Bruyne", "Manchester City", "Belgia", 32, 85, 92, 65, 70),
-            new Piłkarz("N'Golo", "Kante", "Chelsea", "Francja", 32, 60, 75, 90, 80),
-            new Piłkarz("Bruno", "Fernandes", "Manchester United", "Portugalia", 29, 80, 88, 60, 78),
-            new Piłkarz("Son", "Heung-min", "Tottenham", "Korea Południowa", 31, 87, 80, 55, 90),
-            new Piłkarz("Riyad", "Mahrez", "Manchester City", "Algieria", 32, 83, 75, 50, 85),
-            new Piłkarz("Sadio", "Mane", "Al Nassr", "Senegal", 31, 86, 79, 60, 88),
-            new Piłkarz("Virgil", "van Dijk", "Liverpool", "Holandia", 32, 60, 70, 90, 75),
-            new Piłkarz("Alisson", "Becker", "Liverpool", "Brazylia", 31, 50, 55, 85, 70),
-            new Piłkarz("Marcus", "Rashford", "Manchester United", "Anglia", 25, 82, 80, 50, 87),
-            new Piłkarz("Jack", "Grealish", "Manchester City", "Anglia", 28, 75, 82, 55, 80),
-            new Piłkarz("Raheem", "Sterling", "Chelsea", "Anglia", 29, 80, 78, 50, 90),
-            new Piłkarz("Ruben", "Dias", "Manchester City", "Portugalia", 26, 65, 70, 85, 70),
-            new Piłkarz("Ben", "Chilwell", "Chelsea", "Anglia", 26, 70, 75, 70, 80),
-            new Piłkarz("Jadon", "Sancho", "Manchester United", "Anglia", 23, 78, 82, 50, 85),
-            new Piłkarz("Thiago", "Alcantara", "Liverpool", "Hiszpania", 32, 75, 90, 55, 70),
-            new Piłkarz("Ederson", "Moraes", "Manchester City", "Brazylia", 30, 55, 60, 80, 75),
-            new Piłkarz("Cesar", "Azpilicueta", "Chelsea", "Hiszpania", 34, 60, 70, 85, 65),
-            new Piłkarz("Harry", "Maguire", "Manchester United", "Anglia", 31, 55, 72, 87, 67),
-            new Piłkarz("Crisitiano", "Ronaldo", "Al Nassr", "Portugalia", 39, 99, 97, 70, 85),
-            new Piłkarz("Lionel", "Messi", "Inter Maiami", "Argentyna", 37, 80, 90, 15, 50),
-            new Piłkarz("Sergio", "Ramos", "Brak klubu", "Hiszpania", 38, 50, 55, 90, 69),
-        };
-
-       
-
     }
 }
