@@ -73,29 +73,57 @@ public class Menu
     private void Dodawanie()
     {
         Console.Clear();
-        Console.WriteLine("Wybierz z listy 1");
-        Console.WriteLine("wprowadź gracza 2");
+        Console.WriteLine("Wybierz z listy 1: Wprowadź drużynę 1, 2: Wprowadź drużynę 2");
         string gameMode2 = Console.ReadLine();
 
-        switch (gameMode2)
+        ZarządzeniePiłkarzami drużyna1 = new ZarządzeniePiłkarzami();
+        ZarządzeniePiłkarzami drużyna2 = new ZarządzeniePiłkarzami();
+
+        for (int i = 0; i < 2; i++)
         {
-            case "1":
-                Console.WriteLine("wybierz graczy z listy");
-
-                break;
-            case "2":
-                Console.WriteLine("wprowadz dane gracza");
-                Thread.Sleep(1000);
-                ZarządzeniePiłkarzami zarzadzenie = new ZarządzeniePiłkarzami();
-                for (int i = 0; i < 5; i++)
+            Console.WriteLine($"Wprowadz dane dla drużyny {i + 1}:");
+            for (int j = 0; j < 5; j++)
+            {
+                Console.WriteLine($"Dodaj piłkarza {j + 1}:");
+                if (i == 0)
                 {
-                    Console.WriteLine($"Dodaj piłkarza {i + 1}:");
-                    zarzadzenie.DodajPiłkarza();
-                };
-
-                break;
+                    drużyna1.DodajPiłkarza();
+                }
+                else
+                {
+                    drużyna2.DodajPiłkarza();
+                }
+            }
         }
 
+        Console.WriteLine("Drużyna 1:");
+        drużyna1.PokażPiłkarzy();
+        Console.WriteLine("Drużyna 2:");
+        drużyna2.PokażPiłkarzy();
+
+        Thread.Sleep(1000);
+
+        int sumaUmiejętności1 = drużyna1.SumaUmiejętności();
+        int sumaUmiejętności2 = drużyna2.SumaUmiejętności();
+
+        Console.WriteLine($"Suma umiejętności drużyny 1: {sumaUmiejętności1}");
+        Console.WriteLine($"Suma umiejętności drużyny 2: {sumaUmiejętności2}");
+
+        Thread.Sleep(2000);
+
+        // Symulacja meczu
+        Random random = new Random();
+        int wynikLosowy = random.Next(1, sumaUmiejętności1 + sumaUmiejętności2 + 1);
+
+        if (wynikLosowy <= sumaUmiejętności1)
+        {
+            Console.WriteLine("Drużyna 1 wygrała!");
+        }
+        else
+        {
+            Console.WriteLine("Drużyna 2 wygrała!");
+        }
+        Thread.Sleep(4000);
     }
 
     private void ShowAbout()
@@ -216,6 +244,7 @@ public class ZarządzeniePiłkarzami
             else
                 Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
         }
+        
 
         Piłkarz nowyPilkarz = new Piłkarz(imie, nazwisko, klub, narodowosc, wiek, strzelanie, podania, obrona, tempo);
         pilkarze[count] = nowyPilkarz;
@@ -225,10 +254,19 @@ public class ZarządzeniePiłkarzami
     public void PokażPiłkarzy()
     {
         Console.WriteLine("Lista piłkarzy:");
-        for (int i = 0; i < count; i++)
+        foreach (var piłkarz in pilkarze)
         {
-            Console.WriteLine(pilkarze[i]);
+            Console.WriteLine($"{piłkarz.Imie} {piłkarz.Nazwisko} - Klub: {piłkarz.Klub}, Narodowość: {piłkarz.Narodowosc}, Wiek: {piłkarz.Wiek}, OVR: {piłkarz.ovrl()}");
         }
+    }
+    public int SumaUmiejętności()
+    {
+        int suma = 0;
+        foreach (var piłkarz in pilkarze)
+        {
+            suma += piłkarz.ovrl();
+        }
+        return suma;
     }
 }
 class Program
