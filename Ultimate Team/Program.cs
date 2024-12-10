@@ -4,6 +4,7 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 public class Menu
 {
@@ -55,7 +56,9 @@ public class Menu
         switch (gameMode)
         {
             case "1":
+                Console.Clear();
                 Console.WriteLine("Rozpoczynasz grę z komputerem...");
+                Console.WriteLine();
                 Piłkarz[] pilkarzerand = new Piłkarz[]
                 {
                     new Piłkarz("Lionel", "Messi", "Paris Saint-Germain", "Argentyna", 37, 92, 94, 70, 85),
@@ -145,97 +148,104 @@ public class Menu
                     new Piłkarz("Youssef", "En-Nesyri", "Sevilla", "Maroko", 27, 82, 75, 65, 84),
                     new Piłkarz("David", "Clarke", "Aston Villa", "Anglia", 30, 70, 78, 65, 80)
                 };
-               
+                int[] wyniki = new int[5];
+
                 Random random = new Random();
-                int losowaLiczba = random.Next(0, pilkarzerand.Length);
-                Console.WriteLine($"Wylosowana liczba: {losowaLiczba}");
-                Console.WriteLine($"Wylosowany piłkarz: {pilkarzerand[losowaLiczba]}");
-                Console.WriteLine($"Imię: {pilkarzerand[losowaLiczba].Imie}");
-                Console.WriteLine($"Nazwisko: {pilkarzerand[losowaLiczba].Nazwisko}");
-                Console.WriteLine($"Klub: {pilkarzerand[losowaLiczba].Klub}");
-                Console.WriteLine($"Narodowość: {pilkarzerand[losowaLiczba].Narodowosc}");
-                Console.WriteLine($"Wiek: {pilkarzerand[losowaLiczba].Wiek}");
-                Console.WriteLine($"Strzelanie: {pilkarzerand[losowaLiczba].Strzelanie}");
-                Console.WriteLine($"Podania: {pilkarzerand[losowaLiczba].Podania}");
-                Console.WriteLine($"Obrona: {pilkarzerand[losowaLiczba].Obrona}");
-                Console.WriteLine($"Tempo: {pilkarzerand[losowaLiczba].Tempo}");
-                double ocena = (pilkarzerand[losowaLiczba].Podania + pilkarzerand[losowaLiczba].Obrona + pilkarzerand[losowaLiczba].Tempo + pilkarzerand[losowaLiczba].Strzelanie)/4;
-                Console.WriteLine("Ocena tego piłkarza to: " + ocena);
-                Console.WriteLine();
-                Console.WriteLine("Podaj swojego piłkarza!!!");
-                Console.WriteLine("Podaj imię piłkarza:");
-                string imie = Console.ReadLine();
-
-                Console.WriteLine("Podaj nazwisko piłkarza:");
-                string nazwisko = Console.ReadLine();
-
-                Console.WriteLine("Podaj klub piłkarza:");
-                string klub = Console.ReadLine();
-
-                Console.WriteLine("Podaj narodowość piłkarza:");
-                string narodowosc = Console.ReadLine();
-                int wiek = 0;
-                while (true)
+                for (int i = 1; i <= 5; i++)
                 {
-                    Console.WriteLine("Podaj wiek piłkarza:");
-                    if (int.TryParse(Console.ReadLine(), out wiek) && wiek > 0)
-                        break;
+                    Console.WriteLine("Runda: " + i);
+                    Console.WriteLine();
+                    int losowaLiczba = random.Next(0, pilkarzerand.Length);
+                    Console.WriteLine($"Wylosowana numer piłkarza: {losowaLiczba}");
+                    Console.WriteLine($"Imię: {pilkarzerand[losowaLiczba].Imie}");
+                    Console.WriteLine($"Nazwisko: {pilkarzerand[losowaLiczba].Nazwisko}");
+                    Console.WriteLine($"Klub: {pilkarzerand[losowaLiczba].Klub}");
+                    Console.WriteLine($"Narodowość: {pilkarzerand[losowaLiczba].Narodowosc}");
+                    Console.WriteLine($"Wiek: {pilkarzerand[losowaLiczba].Wiek}");
+                    Console.WriteLine($"Strzelanie: {pilkarzerand[losowaLiczba].Strzelanie}");
+                    Console.WriteLine($"Podania: {pilkarzerand[losowaLiczba].Podania}");
+                    Console.WriteLine($"Obrona: {pilkarzerand[losowaLiczba].Obrona}");
+                    Console.WriteLine($"Tempo: {pilkarzerand[losowaLiczba].Tempo}");
+                    double ocena = (pilkarzerand[losowaLiczba].Podania + pilkarzerand[losowaLiczba].Obrona + pilkarzerand[losowaLiczba].Tempo + pilkarzerand[losowaLiczba].Strzelanie) / 4;
+                    Console.WriteLine("Ocena tego piłkarza to: " + ocena);
+                    Console.WriteLine();
+                    Console.WriteLine("Podaj swojego piłkarza!!!");
+                    string imie = Dane("Podaj imię piłkarza:");
+
+                    string nazwisko = Dane("Podaj nazwisko piłkarza:");
+
+                    int strzelanie = 0;
+                    while (true)
+                    {
+                        Console.WriteLine("Podaj ocenę strzelania (0-100):");
+                        if (int.TryParse(Console.ReadLine(), out strzelanie) && strzelanie >= 0 && strzelanie <= 100)
+                            break;
+                        else
+                            Console.WriteLine("Niepoprawna ocena strzelania. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                    }
+
+                    int podania = 0;
+                    while (true)
+                    {
+                        Console.WriteLine("Podaj ocenę podań (0-100):");
+                        if (int.TryParse(Console.ReadLine(), out podania) && podania >= 0 && podania <= 100)
+                            break;
+                        else
+                            Console.WriteLine("Niepoprawna ocena podań. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                    }
+
+                    int obrona = 0;
+                    while (true)
+                    {
+                        Console.WriteLine("Podaj ocenę obrony (0-100):");
+                        if (int.TryParse(Console.ReadLine(), out obrona) && obrona >= 0 && obrona <= 100)
+                            break;
+                        else
+                            Console.WriteLine("Niepoprawna ocena obrony. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                    }
+
+                    int tempo = 0;
+                    while (true)
+                    {
+                        Console.WriteLine("Podaj ocenę tempa (0-100):");
+                        if (int.TryParse(Console.ReadLine(), out tempo) && tempo >= 0 && tempo <= 100)
+                            break;
+                        else
+                            Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                    }
+                    double ocena1 = (podania + tempo + obrona + strzelanie) / 4;
+                    Console.WriteLine();
+                    if (ocena > ocena1)
+                    {
+                        wyniki[i - 1] = 0;
+                    }
                     else
-                        Console.WriteLine("Niepoprawny wiek. Proszę podać liczbę całkowitą większą od 0.");
+                    {
+                        wyniki[i - 1] = 1;
+                    }
+                    Thread.Sleep(500);
+                    Console.WriteLine();
                 }
+                int score = 0;
+                foreach (int i in wyniki)
+                {
+                    score += i;
 
-                int strzelanie = 0;
-                while (true)
-                {
-                    Console.WriteLine("Podaj ocenę strzelania (0-100):");
-                    if (int.TryParse(Console.ReadLine(), out strzelanie) && strzelanie >= 0 && strzelanie <= 100)
-                        break;
-                    else
-                        Console.WriteLine("Niepoprawna ocena strzelania. Proszę podać liczbę całkowitą w zakresie 0-100.");
                 }
+                if (score > 3)
+                {
+                    Console.WriteLine("Wygrałeś tą rozgrywkę!!!");
+                    Console.WriteLine("Wynik: " + score + "-" + (5 - score));
 
-                int podania = 0;
-                while (true)
-                {
-                    Console.WriteLine("Podaj ocenę podań (0-100):");
-                    if (int.TryParse(Console.ReadLine(), out podania) && podania >= 0 && podania <= 100)
-                        break;
-                    else
-                        Console.WriteLine("Niepoprawna ocena podań. Proszę podać liczbę całkowitą w zakresie 0-100.");
-                }
-
-                int obrona = 0;
-                while (true)
-                {
-                    Console.WriteLine("Podaj ocenę obrony (0-100):");
-                    if (int.TryParse(Console.ReadLine(), out obrona) && obrona >= 0 && obrona <= 100)
-                        break;
-                    else
-                        Console.WriteLine("Niepoprawna ocena obrony. Proszę podać liczbę całkowitą w zakresie 0-100.");
-                }
-
-                int tempo = 0;
-                while (true)
-                {
-                    Console.WriteLine("Podaj ocenę tempa (0-100):");
-                    if (int.TryParse(Console.ReadLine(), out tempo) && tempo >= 0 && tempo <= 100)
-                        break;
-                    else
-                        Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
-                }
-                double ocena1 = (podania + tempo + obrona + strzelanie) / 4;
-                if(ocena>ocena1)
-                {
-                    Console.WriteLine("Piłkarz podany przez komputer jest lepszy");
                 }
                 else
                 {
-                    Console.WriteLine("Twój piłkarz jest wygrał!");
+                    Console.WriteLine("Przegrałeś z komuterem");
+                    Console.WriteLine("Wynik: " + score + "-" + (5 - score));
                 }
                 Thread.Sleep(10000);
                 break;
             case "2":
-                
                 Console.WriteLine("Rozpoczynasz grę z drugim graczem...");
                 Thread.Sleep(1000);
                 Dodawanie();
@@ -245,62 +255,56 @@ public class Menu
                 Console.ReadKey();
                 break;
         }
-       
+
+    }
+    static string Dane(string prompt)
+    {
+        string input;
+        while (true)
+        {
+            Console.WriteLine(prompt);
+            input = Console.ReadLine();
+            if (IsValidName(input))
+            {
+                return input;
+            }
+            else
+            {
+                Console.WriteLine("Wprowadź poprawne dane (tylko litery).");
+            }
+        }
+    }
+
+    static bool IsValidName(string input)
+    {
+        return Regex.IsMatch(input, @"^[a-zA-Z]+$");
     }
     private void Dodawanie()
     {
         Console.Clear();
-        Console.WriteLine("Wybierz z listy 1: Wprowadź drużynę 1, 2: Wprowadź drużynę 2");
+        Console.WriteLine("Wybierz z listy 1");
+        Console.WriteLine("wprowadź gracza 2");
         string gameMode2 = Console.ReadLine();
 
-        ZarządzeniePiłkarzami drużyna1 = new ZarządzeniePiłkarzami();
-        ZarządzeniePiłkarzami drużyna2 = new ZarządzeniePiłkarzami();
-
-        for (int i = 0; i < 2; i++)
+        switch (gameMode2)
         {
-            Console.WriteLine($"Wprowadz dane dla drużyny {i + 1}:");
-            for (int j = 0; j < 5; j++)
-            {
-                Console.WriteLine($"Dodaj piłkarza {j + 1}:");
-                if (i == 0)
+            case "1":
+                Console.WriteLine("wybierz graczy z listy");
+
+                break;
+            case "2":
+                Console.WriteLine("wprowadz dane gracza");
+                Thread.Sleep(1000);
+                ZarządzeniePiłkarzami zarzadzenie = new ZarządzeniePiłkarzami();
+                for (int i = 0; i < 5; i++)
                 {
-                    drużyna1.DodajPiłkarza();
-                }
-                else
-                {
-                    drużyna2.DodajPiłkarza();
-                }
-            }
+                    Console.WriteLine($"Dodaj piłkarza {i + 1}:");
+                    zarzadzenie.DodajPiłkarza();
+                };
+
+                break;
         }
 
-        Console.WriteLine("Drużyna 1:");
-        drużyna1.PokażPiłkarzy();
-        Console.WriteLine("Drużyna 2:");
-        drużyna2.PokażPiłkarzy();
-
-        Thread.Sleep(1000);
-
-        int sumaUmiejętności1 = drużyna1.SumaUmiejętności();
-        int sumaUmiejętności2 = drużyna2.SumaUmiejętności();
-
-        Console.WriteLine($"Suma umiejętności drużyny 1: {sumaUmiejętności1}");
-        Console.WriteLine($"Suma umiejętności drużyny 2: {sumaUmiejętności2}");
-
-        Thread.Sleep(2000);
-
-        // Symulacja meczu
-        Random random = new Random();
-        int wynikLosowy = random.Next(1, sumaUmiejętności1 + sumaUmiejętności2 + 1);
-
-        if (wynikLosowy <= sumaUmiejętności1)
-        {
-            Console.WriteLine("Drużyna 1 wygrała!");
-        }
-        else
-        {
-            Console.WriteLine("Drużyna 2 wygrała!");
-        }
-        Thread.Sleep(4000);
     }
 
     private void ShowAbout()
@@ -421,7 +425,6 @@ public class ZarządzeniePiłkarzami
             else
                 Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
         }
-        
 
         Piłkarz nowyPilkarz = new Piłkarz(imie, nazwisko, klub, narodowosc, wiek, strzelanie, podania, obrona, tempo);
         pilkarze[count] = nowyPilkarz;
@@ -431,19 +434,10 @@ public class ZarządzeniePiłkarzami
     public void PokażPiłkarzy()
     {
         Console.WriteLine("Lista piłkarzy:");
-        foreach (var piłkarz in pilkarze)
+        for (int i = 0; i < count; i++)
         {
-            Console.WriteLine($"{piłkarz.Imie} {piłkarz.Nazwisko} - Klub: {piłkarz.Klub}, Narodowość: {piłkarz.Narodowosc}, Wiek: {piłkarz.Wiek}, OVR: {piłkarz.ovrl()}");
+            Console.WriteLine(pilkarze[i]);
         }
-    }
-    public int SumaUmiejętności()
-    {
-        int suma = 0;
-        foreach (var piłkarz in pilkarze)
-        {
-            suma += piłkarz.ovrl();
-        }
-        return suma;
     }
 }
 class Program
