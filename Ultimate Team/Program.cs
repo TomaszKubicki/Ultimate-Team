@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel.Design;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -45,6 +46,7 @@ public class Menu
 
     private void StartGame()
     {
+        Menu:
         Console.Clear();
         Console.WriteLine("=== TRYB GRY ===");
         Console.WriteLine("1. Gra z komputerem");
@@ -57,10 +59,22 @@ public class Menu
         {
             case "1":
                 Console.Clear();
-                Console.WriteLine("Rozpoczynasz grę z komputerem...");
-                Console.WriteLine();
-                Piłkarz[] pilkarzerand = new Piłkarz[]
+                while (true)
                 {
+                    Console.WriteLine("=== USTAWIENIA ===");
+                    Console.WriteLine("1. Podaje sam graczy");
+                    Console.WriteLine("2. Wybieram z listy");
+                    Console.WriteLine("3. Zmień tryb gry");
+                    Console.Write("Wybierz opcję: ");
+                    string trybGry = Console.ReadLine();
+
+                    if (trybGry == "1")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Rozpoczynasz grę z komputerem...");
+                        Console.WriteLine();
+                        Piłkarz[] pilkarzerand = new Piłkarz[]
+                        {
                     new Piłkarz("Lionel", "Messi", "Paris Saint-Germain", "Argentyna", 37, 92, 94, 70, 85),
                     new Piłkarz("Cristiano", "Ronaldo", "Al Nassr", "Portugalia", 39, 91, 89, 72, 83),
                     new Piłkarz("Kylian", "Mbappé", "Paris Saint-Germain", "Francja", 25, 93, 88, 65, 96),
@@ -147,102 +161,120 @@ public class Menu
                     new Piłkarz("Héctor", "Bellerín", "Real Betis", "Hiszpania", 29, 70, 75, 75, 90),
                     new Piłkarz("Youssef", "En-Nesyri", "Sevilla", "Maroko", 27, 82, 75, 65, 84),
                     new Piłkarz("David", "Clarke", "Aston Villa", "Anglia", 30, 70, 78, 65, 80)
-                };
-                int[] wyniki = new int[5];
+                        };
+                        int[] wyniki = new int[5];
 
-                Random random = new Random();
-                for (int i = 1; i <= 5; i++)
-                {
-                    Console.WriteLine("Runda: " + i);
-                    Console.WriteLine();
-                    int losowaLiczba = random.Next(0, pilkarzerand.Length);
-                    Console.WriteLine($"Wylosowana numer piłkarza: {losowaLiczba}");
-                    Console.WriteLine($"Imię: {pilkarzerand[losowaLiczba].Imie}");
-                    Console.WriteLine($"Nazwisko: {pilkarzerand[losowaLiczba].Nazwisko}");
-                    Console.WriteLine($"Klub: {pilkarzerand[losowaLiczba].Klub}");
-                    Console.WriteLine($"Narodowość: {pilkarzerand[losowaLiczba].Narodowosc}");
-                    Console.WriteLine($"Wiek: {pilkarzerand[losowaLiczba].Wiek}");
-                    Console.WriteLine($"Strzelanie: {pilkarzerand[losowaLiczba].Strzelanie}");
-                    Console.WriteLine($"Podania: {pilkarzerand[losowaLiczba].Podania}");
-                    Console.WriteLine($"Obrona: {pilkarzerand[losowaLiczba].Obrona}");
-                    Console.WriteLine($"Tempo: {pilkarzerand[losowaLiczba].Tempo}");
-                    double ocena = (pilkarzerand[losowaLiczba].Podania + pilkarzerand[losowaLiczba].Obrona + pilkarzerand[losowaLiczba].Tempo + pilkarzerand[losowaLiczba].Strzelanie) / 4;
-                    Console.WriteLine("Ocena tego piłkarza to: " + ocena);
-                    Console.WriteLine();
-                    Console.WriteLine("Podaj swojego piłkarza!!!");
-                    string imie = Dane("Podaj imię piłkarza:");
+                        Random random = new Random();
+                        for (int i = 1; i <= 5; i++)
+                        {
+                            Console.WriteLine("Runda: " + i);
+                            Console.WriteLine();
+                            int losowaLiczba = random.Next(0, pilkarzerand.Length);
+                            Console.WriteLine($"Wylosowana numer piłkarza: {losowaLiczba}");
+                            Console.WriteLine($"Imię: {pilkarzerand[losowaLiczba].Imie}");
+                            Console.WriteLine($"Nazwisko: {pilkarzerand[losowaLiczba].Nazwisko}");
+                            Console.WriteLine($"Klub: {pilkarzerand[losowaLiczba].Klub}");
+                            Console.WriteLine($"Narodowość: {pilkarzerand[losowaLiczba].Narodowosc}");
+                            Console.WriteLine($"Wiek: {pilkarzerand[losowaLiczba].Wiek}");
+                            Console.WriteLine($"Strzelanie: {pilkarzerand[losowaLiczba].Strzelanie}");
+                            Console.WriteLine($"Podania: {pilkarzerand[losowaLiczba].Podania}");
+                            Console.WriteLine($"Obrona: {pilkarzerand[losowaLiczba].Obrona}");
+                            Console.WriteLine($"Tempo: {pilkarzerand[losowaLiczba].Tempo}");
+                            double ocena = (pilkarzerand[losowaLiczba].Podania + pilkarzerand[losowaLiczba].Obrona + pilkarzerand[losowaLiczba].Tempo + pilkarzerand[losowaLiczba].Strzelanie) / 4;
+                            Console.WriteLine("Ocena tego piłkarza to: " + ocena);
+                            Console.WriteLine();
+                            Console.WriteLine("Podaj swojego piłkarza!!!");
+                            string imie = Dane("Podaj imię piłkarza:");
 
-                    string nazwisko = Dane("Podaj nazwisko piłkarza:");
+                            string nazwisko = Dane("Podaj nazwisko piłkarza:");
 
-                    int strzelanie = 0;
-                    while (true)
-                    {
-                        Console.WriteLine("Podaj ocenę strzelania (0-100):");
-                        if (int.TryParse(Console.ReadLine(), out strzelanie) && strzelanie >= 0 && strzelanie <= 100)
-                            break;
+                            int strzelanie = 0;
+                            while (true)
+                            {
+                                Console.WriteLine("Podaj ocenę strzelania (0-100):");
+                                if (int.TryParse(Console.ReadLine(), out strzelanie) && strzelanie >= 0 && strzelanie <= 100)
+                                    break;
+                                else
+                                    Console.WriteLine("Niepoprawna ocena strzelania. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                            }
+
+                            int podania = 0;
+                            while (true)
+                            {
+                                Console.WriteLine("Podaj ocenę podań (0-100):");
+                                if (int.TryParse(Console.ReadLine(), out podania) && podania >= 0 && podania <= 100)
+                                    break;
+                                else
+                                    Console.WriteLine("Niepoprawna ocena podań. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                            }
+
+                            int obrona = 0;
+                            while (true)
+                            {
+                                Console.WriteLine("Podaj ocenę obrony (0-100):");
+                                if (int.TryParse(Console.ReadLine(), out obrona) && obrona >= 0 && obrona <= 100)
+                                    break;
+                                else
+                                    Console.WriteLine("Niepoprawna ocena obrony. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                            }
+
+                            int tempo = 0;
+                            while (true)
+                            {
+                                Console.WriteLine("Podaj ocenę tempa (0-100):");
+                                if (int.TryParse(Console.ReadLine(), out tempo) && tempo >= 0 && tempo <= 100)
+                                    break;
+                                else
+                                    Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                            }
+                            double ocena1 = (podania + tempo + obrona + strzelanie) / 4;
+                            Console.WriteLine();
+                            if (ocena > ocena1)
+                            {
+                                wyniki[i - 1] = 0;
+                            }
+                            else
+                            {
+                                wyniki[i - 1] = 1;
+                            }
+                            Thread.Sleep(500);
+                            Console.WriteLine();
+                        }
+                        int score = 0;
+                        foreach (int i in wyniki)
+                        {
+                            score += i;
+
+                        }
+                        if (score > 3)
+                        {
+                            Console.WriteLine("Wygrałeś tą rozgrywkę!!!");
+                            Console.WriteLine("Wynik: " + score + "-" + (5 - score));
+
+                        }
                         else
-                            Console.WriteLine("Niepoprawna ocena strzelania. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                        {
+                            Console.WriteLine("Przegrałeś z komuterem");
+                            Console.WriteLine("Wynik: " + score + "-" + (5 - score));
+                        }
                     }
-
-                    int podania = 0;
-                    while (true)
+                    
+                    else if (trybGry == "2")
                     {
-                        Console.WriteLine("Podaj ocenę podań (0-100):");
-                        if (int.TryParse(Console.ReadLine(), out podania) && podania >= 0 && podania <= 100)
-                            break;
-                        else
-                            Console.WriteLine("Niepoprawna ocena podań. Proszę podać liczbę całkowitą w zakresie 0-100.");
+                        Console.Clear();
+                        Console.WriteLine("Tu będzie tryb z wybieraniem");
+                        break;
                     }
-
-                    int obrona = 0;
-                    while (true)
+                    else if (trybGry == "3")
                     {
-                        Console.WriteLine("Podaj ocenę obrony (0-100):");
-                        if (int.TryParse(Console.ReadLine(), out obrona) && obrona >= 0 && obrona <= 100)
-                            break;
-                        else
-                            Console.WriteLine("Niepoprawna ocena obrony. Proszę podać liczbę całkowitą w zakresie 0-100.");
-                    }
-
-                    int tempo = 0;
-                    while (true)
-                    {
-                        Console.WriteLine("Podaj ocenę tempa (0-100):");
-                        if (int.TryParse(Console.ReadLine(), out tempo) && tempo >= 0 && tempo <= 100)
-                            break;
-                        else
-                            Console.WriteLine("Niepoprawna ocena tempa. Proszę podać liczbę całkowitą w zakresie 0-100.");
-                    }
-                    double ocena1 = (podania + tempo + obrona + strzelanie) / 4;
-                    Console.WriteLine();
-                    if (ocena > ocena1)
-                    {
-                        wyniki[i - 1] = 0;
+                        goto Menu;
                     }
                     else
                     {
-                        wyniki[i - 1] = 1;
+                        Console.Clear();
+                        Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
                     }
-                    Thread.Sleep(500);
-                    Console.WriteLine();
-                }
-                int score = 0;
-                foreach (int i in wyniki)
-                {
-                    score += i;
-
-                }
-                if (score > 3)
-                {
-                    Console.WriteLine("Wygrałeś tą rozgrywkę!!!");
-                    Console.WriteLine("Wynik: " + score + "-" + (5 - score));
-
-                }
-                else
-                {
-                    Console.WriteLine("Przegrałeś z komuterem");
-                    Console.WriteLine("Wynik: " + score + "-" + (5 - score));
-                }
+                } 
                 Thread.Sleep(10000);
                 break;
             case "2":
