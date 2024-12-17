@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using static Menu;
+
 public class Menu
 {
     public void ShowMainMenu()
@@ -46,7 +48,7 @@ public class Menu
 
     private void StartGame()
     {
-        Menu:
+    Menu:
         Console.Clear();
         Console.WriteLine("=== TRYB GRY ===");
         Console.WriteLine("1. Gra z komputerem");
@@ -258,12 +260,82 @@ public class Menu
                             Console.WriteLine("Wynik: " + score + "-" + (5 - score));
                         }
                     }
-                    
+
                     else if (trybGry == "2")
                     {
+
+                        Drużyna druzyna = new Drużyna();
                         Console.Clear();
-                        Console.WriteLine("Tu będzie tryb z wybieraniem");
+                        Console.WriteLine("Lista wszystkich piłkarzy:");
+                        for (int i = 0; i < druzyna.Pilkarze.Length; i++)
+                        {
+                            Piłkarz wybranyPilkarz = druzyna.Pilkarze[i];
+                            Console.Write(i + ". ");
+                            Console.WriteLine(wybranyPilkarz);
+                        }
+                        int[] wyniki = new int[5];
+                        for (int j = 1; j <= 5; j++)
+                        {
+                            int index = -1;
+                            bool validIndex = false;
+
+                            while (!validIndex)
+                            {
+                                Console.WriteLine("Podaj indeks piłkarza (0 - " + (druzyna.Pilkarze.Length - 1) + "):");
+
+                                if (int.TryParse(Console.ReadLine(), out index) && index >= 0 && index < druzyna.Pilkarze.Length)
+                                {
+                                    validIndex = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Nieprawidłowy indeks. Proszę spróbować ponownie.");
+                                }
+                            }
+
+                            Console.Clear();
+                            Console.WriteLine("Wybrałeś: ");
+                            Piłkarz wybranyPilkarz = druzyna.Pilkarze[index];
+                            Console.WriteLine(wybranyPilkarz);
+
+                            Random random = new Random();
+                            int losowaLiczba = random.Next(0, druzyna.Pilkarze.Length);
+                            Console.WriteLine("Komputer wylosował: ");
+                            Piłkarz wybranyPilkarz1 = druzyna.Pilkarze[losowaLiczba];
+                            Console.WriteLine(wybranyPilkarz1);
+
+                            double ovrl = (wybranyPilkarz.Strzelanie + wybranyPilkarz.Obrona + wybranyPilkarz.Podania + wybranyPilkarz.Tempo) / 4;
+                            double ovrl1 = (wybranyPilkarz1.Strzelanie + wybranyPilkarz1.Obrona + wybranyPilkarz1.Podania + wybranyPilkarz1.Tempo) / 4;
+
+                            if (ovrl1 > ovrl)
+                            {
+                                wyniki[j - 1] = 0;
+                            }
+                            else
+                            {
+                                wyniki[j - 1] = 1;
+                            }
+                        }
+
+                        int score = 0;
+                        foreach (int i in wyniki)
+                        {
+                            score += i;
+
+                        }
+                        if (score > 3)
+                        {
+                            Console.WriteLine("Wygrałeś tą rozgrywkę!!!");
+                            Console.WriteLine("Wynik: " + score + "-" + (5 - score));
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Przegrałeś z komuterem");
+                            Console.WriteLine("Wynik: " + score + "-" + (5 - score));
+                        }
                         break;
+
                     }
                     else if (trybGry == "3")
                     {
@@ -274,7 +346,7 @@ public class Menu
                         Console.Clear();
                         Console.WriteLine("Niepoprawny wybór. Naciśnij dowolny klawisz, aby spróbować ponownie.");
                     }
-                } 
+                }
                 Thread.Sleep(10000);
                 break;
             case "2":
@@ -289,6 +361,7 @@ public class Menu
         }
 
     }
+
     static string Dane(string prompt)
     {
         string input;
@@ -348,6 +421,103 @@ public class Menu
         Console.ReadKey();
     }
 }
+public class Drużyna
+{
+    public Piłkarz[] Pilkarze { get; private set; }
+
+    public Drużyna()
+    {
+        Pilkarze = new Piłkarz[]
+        {
+                    new Piłkarz("Lionel", "Messi", "Paris Saint-Germain", "Argentyna", 37, 92, 94, 70, 85),
+                    new Piłkarz("Cristiano", "Ronaldo", "Al Nassr", "Portugalia", 39, 91, 89, 72, 83),
+                    new Piłkarz("Kylian", "Mbappé", "Paris Saint-Germain", "Francja", 25, 93, 88, 65, 96),
+                    new Piłkarz("Erling", "Haaland", "Manchester City", "Norwegia", 24, 92, 80, 75, 90),
+                    new Piłkarz("Kevin", "De Bruyne", "Manchester City", "Belgia", 33, 85, 95, 60, 85),
+                    new Piłkarz("Robert", "Lewandowski", "FC Barcelona", "Polska", 36, 91, 85, 70, 75),
+                    new Piłkarz("Neymar", "Jr", "Al Hilal", "Brazylia", 32, 87, 88, 58, 90),
+                    new Piłkarz("Luka", "Modrić", "Real Madryt", "Chorwacja", 38, 78, 92, 60, 80),
+                    new Piłkarz("Vinícius", "Jr", "Real Madryt", "Brazylia", 24, 85, 82, 60, 95),
+                    new Piłkarz("Sadio", "Mané", "Al Nassr", "Senegal", 32, 88, 85, 75, 92),
+                    new Piłkarz("Harry", "Kane", "Bayern Monachium", "Anglia", 31, 90, 82, 68, 75),
+                    new Piłkarz("Mohamed", "Salah", "Liverpool", "Egipt", 31, 90, 85, 60, 89),
+                    new Piłkarz("Joshua", "Kimmich", "Bayern Monachium", "Niemcy", 29, 75, 90, 85, 80),
+                    new Piłkarz("Marco", "Reus", "Borussia Dortmund", "Niemcy", 35, 82, 88, 70, 82),
+                    new Piłkarz("Leroy", "Sané", "Bayern Monachium", "Niemcy", 28, 85, 80, 70, 90),
+                    new Piłkarz("Gerard", "Piqué", "FC Barcelona", "Hiszpania", 37, 60, 70, 90, 60),
+                    new Piłkarz("Thibaut", "Courtois", "Real Madryt", "Belgia", 32, 35, 50, 95, 60),
+                    new Piłkarz("Jan", "Oblak", "Atlético Madryt", "Słowenia", 31, 30, 45, 95, 58),
+                    new Piłkarz("Marc-André", "ter Stegen", "FC Barcelona", "Niemcy", 32, 25, 50, 94, 60),
+                    new Piłkarz("Kalidou", "Koulibaly", "Al Hilal", "Senegal", 33, 70, 75, 90, 70),
+                    new Piłkarz("Raphaël", "Varane", "Manchester United", "Francja", 31, 70, 75, 85, 75),
+                    new Piłkarz("Virgil", "van Dijk", "Liverpool", "Holandia", 33, 75, 70, 90, 72),
+                    new Piłkarz("Aymeric", "Laporte", "Al Nassr", "Hiszpania", 30, 75, 80, 85, 73),
+                    new Piłkarz("Frenkie", "de Jong", "FC Barcelona", "Holandia", 27, 75, 90, 60, 85),
+                    new Piłkarz("Jude", "Bellingham", "Real Madryt", "Anglia", 20, 80, 85, 70, 88),
+                    new Piłkarz("Bukayo", "Saka", "Arsenal", "Anglia", 22, 85, 82, 65, 89),
+                    new Piłkarz("Martin", "Ødegaard", "Arsenal", "Norwegia", 25, 80, 90, 65, 85),
+                    new Piłkarz("Phil", "Foden", "Manchester City", "Anglia", 24, 85, 87, 60, 88),
+                    new Piłkarz("Mason", "Mount", "Manchester United", "Anglia", 25, 75, 85, 60, 80),
+                    new Piłkarz("Declan", "Rice", "Arsenal", "Anglia", 25, 70, 80, 85, 75),
+                    new Piłkarz("Casemiro", "Casemiro", "Manchester United", "Brazylia", 32, 75, 80, 90, 72),
+                    new Piłkarz("Rodri", "Rodrigo Hernández", "Manchester City", "Hiszpania", 27, 75, 82, 85, 80),
+                    new Piłkarz("Jadon", "Sancho", "Manchester United", "Anglia", 24, 80, 85, 65, 87),
+                    new Piłkarz("Antoine", "Griezmann", "Atlético Madryt", "Francja", 33, 80, 85, 60, 88),
+                    new Piłkarz("João", "Félix", "Chelsea", "Portugalia", 24, 84, 87, 55, 90),
+                    new Piłkarz("Ansu", "Fati", "FC Barcelona", "Hiszpania", 21, 82, 80, 55, 91),
+                    new Piłkarz("Ousmane", "Dembélé", "Paris Saint-Germain", "Francja", 27, 85, 87, 60, 92),
+                    new Piłkarz("Gerard", "Moreno", "Villarreal", "Hiszpania", 32, 79, 81, 70, 85),
+                    new Piłkarz("Raheem", "Sterling", "Chelsea", "Anglia", 29, 83, 85, 62, 90),
+                    new Piłkarz("Dominik", "Szoboszlai", "Liverpool", "Węgry", 23, 80, 88, 65, 85),
+                    new Piłkarz("Martin", "Braithwaite", "Espanyol", "Dania", 33, 75, 78, 65, 80),
+                    new Piłkarz("Carlos", "Solér", "Paris Saint-Germain", "Hiszpania", 27, 78, 82, 60, 85),
+                    new Piłkarz("Ben", "White", "Arsenal", "Anglia", 26, 70, 75, 80, 80),
+                    new Piłkarz("Dani", "Carvajal", "Real Madryt", "Hiszpania", 32, 65, 75, 88, 75),
+                    new Piłkarz("Serge", "Gnabry", "Bayern Monachium", "Niemcy", 28, 86, 80, 70, 88),
+                    new Piłkarz("Ibrahima", "Konaté", "Liverpool", "Francja", 25, 75, 72, 88, 85),
+                    new Piłkarz("David", "Alaba", "Real Madryt", "Austria", 32, 80, 80, 85, 75),
+                    new Piłkarz("Mats", "Hummels", "Borussia Dortmund", "Niemcy", 35, 70, 65, 90, 60),
+                    new Piłkarz("Julian", "Brandt", "Borussia Dortmund", "Niemcy", 27, 75, 81, 60, 84),
+                    new Piłkarz("Kieran", "Trippier", "Newcastle United", "Anglia", 33, 60, 82, 85, 75),
+                    new Piłkarz("Marcos", "Llorente", "Atlético Madryt", "Hiszpania", 29, 80, 78, 80, 82),
+                    new Piłkarz("Rodrigo", "Bento", "Real Madryt", "Brazylia", 23, 77, 82, 65, 80),
+                    new Piłkarz("César", "Azpilicueta", "Chelsea", "Hiszpania", 34, 65, 75, 85, 70),
+                    new Piłkarz("André", "Onana", "Manchester United", "Kamerun", 28, 30, 50, 90, 60),
+                    new Piłkarz("Benjamin", "Pavard", "Bayern Monachium", "Francja", 28, 72, 75, 85, 80),
+                    new Piłkarz("Nicolas", "Otamendi", "Benfica", "Argentyna", 36, 70, 65, 90, 70),
+                    new Piłkarz("Toni", "Kroos", "Real Madryt", "Niemcy", 34, 75, 92, 60, 70),
+                    new Piłkarz("Riyad", "Mahrez", "Al Ahli", "Algieria", 33, 85, 80, 60, 85),
+                    new Piłkarz("Mauro", "Icardi", "Galatasaray", "Argentyna", 31, 85, 78, 60, 75),
+                    new Piłkarz("Jules", "Koundé", "FC Barcelona", "Francja", 25, 70, 75, 85, 82),
+                    new Piłkarz("Aaron", "Wan-Bissaka", "Manchester United", "Anglia", 26, 60, 65, 85, 80),
+                    new Piłkarz("Nuno", "Tavares", "Olympique Marsylia", "Portugalia", 23, 65, 70, 75, 87),
+                    new Piłkarz("Marquinhos", "Marquinhos", "Paris Saint-Germain", "Brazylia", 29, 70, 75, 88, 80),
+                    new Piłkarz("Kalvin", "Phillips", "Manchester City", "Anglia", 28, 70, 75, 80, 75),
+                    new Piłkarz("Dani", "Olmo", "RB Leipzig", "Hiszpania", 25, 78, 85, 55, 85),
+                    new Piłkarz("Hugo", "Lloris", "Tottenham Hotspur", "Francja", 37, 30, 40, 92, 65),
+                    new Piłkarz("Yassine", "Bounou", "Sevilla", "Maroko", 33, 30, 45, 90, 70),
+                    new Piłkarz("Sergio", "Ramos", "Al Hilal", "Hiszpania", 37, 65, 70, 90, 75),
+                    new Piłkarz("Milan", "Škriniar", "Paris Saint-Germain", "Słowacja", 29, 70, 70, 88, 78),
+                    new Piłkarz("Gareth", "Bale", "Los Angeles FC", "Walia", 35, 80, 75, 55, 85),
+                    new Piłkarz("Christian", "Pulisic", "AC Milan", "USA", 25, 80, 85, 60, 86),
+                    new Piłkarz("Ciro", "Immobile", "Lazio", "Włochy", 34, 89, 75, 55, 75),
+                    new Piłkarz("Pierre-Emerick", "Aubameyang", "Chelsea", "Gabon", 34, 85, 75, 60, 85),
+                    new Piłkarz("Alexandre", "Lacazette", "Lyon", "Francja", 33, 84, 72, 55, 80),
+                    new Piłkarz("Wilfried", "Zaha", "Galatasaray", "Wybrzeże Kości Słoniowej", 31, 82, 78, 65, 87),
+                    new Piłkarz("Timo", "Werner", "RB Leipzig", "Niemcy", 28, 83, 70, 60, 90),
+                    new Piłkarz("Theo", "Hernández", "AC Milan", "Francja", 26, 80, 75, 70, 92),
+                    new Piłkarz("Marcos", "Acuña", "Sevilla", "Argentyna", 32, 75, 80, 78, 82),
+                    new Piłkarz("Nabil", "Fekir", "Real Betis", "Francja", 30, 78, 85, 60, 85),
+                    new Piłkarz("Fikayo", "Tomori", "AC Milan", "Anglia", 26, 70, 75, 85, 82),
+                    new Piłkarz("Sergi", "Roberto", "FC Barcelona", "Hiszpania", 32, 70, 80, 75, 80),
+                    new Piłkarz("David", "Silva", "Real Sociedad", "Hiszpania", 38, 75, 90, 60, 70),
+                    new Piłkarz("Michaël", "Cuisance", "Marseille", "Francja", 24, 75, 78, 60, 85),
+                    new Piłkarz("Héctor", "Bellerín", "Real Betis", "Hiszpania", 29, 70, 75, 75, 90),
+                    new Piłkarz("Youssef", "En-Nesyri", "Sevilla", "Maroko", 27, 82, 75, 65, 84),
+                    new Piłkarz("David", "Clarke", "Aston Villa", "Anglia", 30, 70, 78, 65, 80)
+        };
+    }
+}
 public class Piłkarz
 {
     public string Imie;
@@ -375,6 +545,10 @@ public class Piłkarz
     public int ovrl()
     {
         return ((Strzelanie + Podania + Obrona + Tempo) / 4);
+    }
+    public override string ToString()
+    {
+        return $"{Imie} {Nazwisko} {Klub} {Narodowosc} {Wiek} {Strzelanie} {Podania} {Tempo} {Obrona}";
     }
 }
 public class ZarządzeniePiłkarzami
