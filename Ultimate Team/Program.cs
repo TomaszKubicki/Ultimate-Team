@@ -518,6 +518,28 @@ public class Drużyna
         };
     }
 }
+public class Trener
+{
+    public string Imie { get; private set; }
+    public string Nazwisko { get; private set; }
+    public string Narodowosc { get; private set; }
+    public int Wiek { get; private set; }
+    public string Liga { get; private set; }
+
+    public Trener(string imie, string nazwisko, string narodowosc, int wiek, string liga)
+    {
+        Imie = imie;
+        Nazwisko = nazwisko;
+        Narodowosc = narodowosc;
+        Wiek = wiek;
+        Liga = liga;
+    }
+
+    public override string ToString()
+    {
+        return $"{Imie} {Nazwisko}, Narodowość: {Narodowosc}, Wiek: {Wiek}, Liga: {Liga}";
+    }
+}
 public class Piłkarz
 {
     public string Imie;
